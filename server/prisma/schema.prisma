@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Image {
+  id         Int         @id @default(autoincrement())
+  name       String
+  url        String      // "/full-images/whereswally1.jpg"
+  characters Character[]
+  games Game[]
+}
+
+
+model Character {
+  id      Int    @id @default(autoincrement())
+  name    String
+  xMin    Float  // all values 0–1, fractions of the image
+  xMax    Float
+  yMin    Float
+  yMax    Float
+  imageId Int
+  image   Image  @relation(fields: [imageId], references: [id])
+}
+
+model Game {
+  id String @id @default(uuid()) // random,unguessable
+  imageId Int
+
+  image Image @relation(fields: [imageId], references: [id])
+
+  foundCharacterIds Int[]
+  startedAt DateTime @default(now())
+  finishedAt DateTime? 
+  playerName String?
+  durationMs        Int? // finishedAt - startedAt, stored so the leaderboard can sort by it
+}

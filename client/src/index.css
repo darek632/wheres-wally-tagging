@@ -1,0 +1,296 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: #f4f1ea;
+  color: #1d1d1d;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: #c8102e;
+  color: #fff;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.character-legend {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.character-legend li {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 0.9rem;
+}
+
+main {
+  padding: 1.5rem;
+}
+
+/* The container is the positioning context for the box and menu. */
+.game-image {
+  position: relative;
+  width: fit-content;
+  max-width: 80%;
+  margin: 0 auto;
+  overflow: hidden; /* keeps the box's dimming effect inside the photo */
+  user-select: none;
+}
+
+.game-image img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  cursor: crosshair;
+}
+
+.target-box {
+  position: absolute;
+  border: 3px dashed #fff;
+  border-radius: 50%;
+  outline: 2px solid #000;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.25);
+  pointer-events: none; /* clicks pass through to the image */
+}
+
+.target-menu {
+  position: absolute;
+  z-index: 10;
+  min-width: 180px;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.target-menu__title {
+  padding: 0.4rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #777;
+}
+
+.target-menu button {
+  width: 100%;
+  padding: 0.5rem 0.6rem;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.target-menu button:hover,
+.target-menu button:focus-visible {
+  background: #ffe3e7;
+  outline: none;
+}
+
+.status {
+  padding: 2rem;
+  text-align: center;
+}
+
+.character-legend li.is-found {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.game-image.is-disabled img {
+  cursor: default;
+}
+
+/* Marker placed on a correctly found character */
+.marker {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  transform: translate(-50%, -50%); /* centre the marker on the point */
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: #2e8b57;
+  box-shadow: 0 0 0 2px #000, 0 2px 8px rgba(0, 0, 0, 0.4);
+  pointer-events: none; /* clicks pass through to the image */
+}
+
+.marker__label {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 6px);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  background: #000;
+  color: #fff;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* Feedback message after each guess */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.toast--success {
+  background: #2e8b57;
+}
+
+.toast--error {
+  background: #c8102e;
+}
+
+.timer {
+  font-variant-numeric: tabular-nums; /* digits stay the same width, so it doesn't jiggle */
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+/* ---------- Win modal ---------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.modal {
+  width: min(420px, 100%);
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+
+.modal h2 {
+  margin: 0 0 0.25rem;
+}
+
+.modal__time {
+  margin: 0 0 1.25rem;
+  font-size: 1.1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.score-form {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.score-form__row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.score-form input {
+  flex: 1;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.score-form button[type="submit"],
+.primary-button {
+  padding: 0.55rem 1rem;
+  border: 0;
+  border-radius: 6px;
+  background: #c8102e;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.score-form button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.score-form__error {
+  margin: 0;
+  color: #c8102e;
+  font-size: 0.9rem;
+}
+
+.link-button {
+  justify-self: start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #555;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.leaderboard {
+  margin: 0 0 1.25rem;
+  padding: 0;
+  list-style: none;
+  counter-reset: rank; /* our own numbering, since flex items lose the default numbers */
+  text-align: left;
+}
+
+.leaderboard li {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  counter-increment: rank;
+}
+
+.leaderboard li::before {
+  content: counter(rank) ".";
+  width: 1.5rem;
+  color: #777;
+}
+
+.leaderboard li span:first-child {
+  flex: 1;
+}
+
+.leaderboard li span:last-child {
+  font-variant-numeric: tabular-nums;
+}
+
+.leaderboard li.is-you {
+  background: #ffe3e7;
+  font-weight: 600;
+}
